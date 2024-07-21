@@ -1,0 +1,36 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Flutter: flutter pub get",
+      "group": "build",
+      "type": "flutter",
+      "command": "flutter",
+      "args": ["pub", "get"]
+    },
+    {
+      "label": "Build Web and Copy to `../docs`",
+      "group": "build",
+      "type": "shell",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "Flutter: flutter build web",
+        "Copy build/web to docs"
+      ]
+    },
+    {
+      "label": "Flutter: flutter build web",
+      "group": "build",
+      "type": "flutter",
+      "command": "flutter",
+      "args": ["build", "web", "-t", "lib/main.dart",]
+    },
+    {
+      "label": "Copy build/web to docs",
+      "group": "none",
+      "type": "shell",
+      "command": "cp",
+      "args": ["-a", "build/web/.", "../docs",]
+    }
+  ]
+}
