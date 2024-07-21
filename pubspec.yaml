@@ -1,10 +1,11 @@
 name: aes256
 description: AES CBC mode with 256-bit key, PKCS7 padding, and random salt.
-version: 1.0.3
+version: 1.0.4
 homepage: https://knottx.github.io/aes256-dart
 repository: https://github.com/knottx/aes256-dart
 issue_tracker: https://github.com/knottx/aes256-dart/issues
 topics: [aes, aes256]
+funding: [https://github.com/sponsors/knottx]
 
 environment:
   sdk: '>=3.0.0 <4.0.0'

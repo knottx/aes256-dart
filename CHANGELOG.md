@@ -1,3 +1,7 @@
+# 1.0.4
+
+- Add API Docs.
+
 # 1.0.3
 
 - Add Demo.

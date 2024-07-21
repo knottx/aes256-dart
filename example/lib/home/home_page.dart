@@ -85,7 +85,7 @@ class _HomeViewState extends State<HomeView> {
             child: _actionButton(state),
           ),
           const SizedBox(height: 16),
-          _result(state.result ?? ''),
+          _result(state.result),
         ],
       ),
     );
