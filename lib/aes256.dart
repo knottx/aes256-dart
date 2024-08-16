@@ -1,3 +1,12 @@
+/*
+ * This file incorporates code from the AES Everywhere library (https://github.com/mervick/aes-everywhere), 
+ * Copyright (c) 2018-2019 Andrey Izman, used under the MIT License.
+ * 
+ * Modifications and enhancements by Visarut Tippun, Copyright (c) 2024.
+ * 
+ * See the LICENSE file for more information.
+ */
+
 import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
