@@ -1,3 +1,7 @@
+# 1.0.6
+
+- Update Readme.
+
 # 1.0.5
 
 - Remove unnecessary async.
