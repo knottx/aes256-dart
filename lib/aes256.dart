@@ -59,23 +59,19 @@ class Aes256 {
   /// Throws:
   /// - An error if encryption fails.
   static Future<String> encrypt(String text, String passphrase) async {
-    try {
-      final random = Random.secure();
-      final salt = List<int>.generate(8, (_) => random.nextInt(256));
-      final salted = _generateSaltedKeyAndIv(passphrase, salt);
+    final random = Random.secure();
+    final salt = List<int>.generate(8, (_) => random.nextInt(256));
+    final salted = _generateSaltedKeyAndIv(passphrase, salt);
 
-      final key = Key(Uint8List.fromList(salted.sublist(0, 32)));
-      final iv = IV(Uint8List.fromList(salted.sublist(32, 48)));
-      final encryptor = Encrypter(AES(key, mode: AESMode.cbc));
+    final key = Key(Uint8List.fromList(salted.sublist(0, 32)));
+    final iv = IV(Uint8List.fromList(salted.sublist(32, 48)));
+    final encryptor = Encrypter(AES(key, mode: AESMode.cbc));
 
-      final encrypted = encryptor.encrypt(text, iv: iv).bytes;
-      final saltedPrefix = utf8.encode('Salted__');
-      final result = saltedPrefix + salt + encrypted;
+    final encrypted = encryptor.encrypt(text, iv: iv).bytes;
+    final saltedPrefix = utf8.encode('Salted__');
+    final result = saltedPrefix + salt + encrypted;
 
-      return base64.encode(result);
-    } catch (error) {
-      rethrow;
-    }
+    return base64.encode(result);
   }
 
   /// Decrypts a base64 encoded string using AES-256 with the given passphrase.
@@ -94,24 +90,20 @@ class Aes256 {
   ///
   /// Throws:
   /// - An error if decryption fails.
-  static Future<String?> decrypt(String encoded, String passphrase) async {
-    try {
-      final enc = base64.decode(encoded);
-      final saltedPrefix = utf8.decode(enc.sublist(0, 8));
+  static String? decrypt(String encoded, String passphrase) {
+    final enc = base64.decode(encoded);
+    final saltedPrefix = utf8.decode(enc.sublist(0, 8));
 
-      if (saltedPrefix != 'Salted__') return null;
+    if (saltedPrefix != 'Salted__') return null;
 
-      final salt = enc.sublist(8, 16);
-      final text = enc.sublist(16);
-      final salted = _generateSaltedKeyAndIv(passphrase, salt);
+    final salt = enc.sublist(8, 16);
+    final text = enc.sublist(16);
+    final salted = _generateSaltedKeyAndIv(passphrase, salt);
 
-      final key = Key(Uint8List.fromList(salted.sublist(0, 32)));
-      final iv = IV(Uint8List.fromList(salted.sublist(32, 48)));
-      final encryptor = Encrypter(AES(key, mode: AESMode.cbc));
+    final key = Key(Uint8List.fromList(salted.sublist(0, 32)));
+    final iv = IV(Uint8List.fromList(salted.sublist(32, 48)));
+    final encryptor = Encrypter(AES(key, mode: AESMode.cbc));
 
-      return encryptor.decrypt(Encrypted(Uint8List.fromList(text)), iv: iv);
-    } catch (error) {
-      rethrow;
-    }
+    return encryptor.decrypt(Encrypted(Uint8List.fromList(text)), iv: iv);
   }
 }

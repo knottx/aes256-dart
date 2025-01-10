@@ -1,3 +1,7 @@
+# 1.0.5
+
+- Remove unnecessary async.
+
 # 1.0.4
 
 - Add API Docs.
@@ -17,4 +21,3 @@
 # 1.0.0
 
 - Initial release.
-
