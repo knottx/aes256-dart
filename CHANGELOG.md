@@ -1,3 +1,7 @@
+# 1.0.7
+
+- Remove unnecessary async, update throw argument error.
+
 # 1.0.6
 
 - Update Readme.

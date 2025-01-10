@@ -9,15 +9,16 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  aes256: ^1.0.4
+  aes256:
+    path: ../
   flutter_bloc: ^8.1.6
-  equatable: ^2.0.5
-  url_launcher: ^6.3.0
+  equatable: ^2.0.7
+  url_launcher: ^6.3.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^4.0.0
+  flutter_lints: ^5.0.0
 
 flutter:
   uses-material-design: true

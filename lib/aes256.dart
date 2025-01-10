@@ -58,7 +58,7 @@ class Aes256 {
   ///
   /// Throws:
   /// - An error if encryption fails.
-  static Future<String> encrypt(String text, String passphrase) async {
+  static String encrypt(String text, String passphrase) {
     final random = Random.secure();
     final salt = List<int>.generate(8, (_) => random.nextInt(256));
     final salted = _generateSaltedKeyAndIv(passphrase, salt);
@@ -94,7 +94,11 @@ class Aes256 {
     final enc = base64.decode(encoded);
     final saltedPrefix = utf8.decode(enc.sublist(0, 8));
 
-    if (saltedPrefix != 'Salted__') return null;
+    if (saltedPrefix != 'Salted__') {
+      throw ArgumentError(
+        'Invalid salted prefix: "$saltedPrefix". Expected "Salted__".',
+      );
+    }
 
     final salt = enc.sublist(8, 16);
     final text = enc.sublist(16);
