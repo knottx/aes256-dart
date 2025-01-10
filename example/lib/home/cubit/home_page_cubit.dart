@@ -64,7 +64,10 @@ class HomePageCubit extends Cubit<HomePageState> {
 
   void _encrypt() async {
     try {
-      final result = Aes256.encrypt(text, passphrase);
+      final result = Aes256.encrypt(
+        text: text,
+        passphrase: passphrase,
+      );
       emit(
         state.copyWith(
           result: result,
@@ -78,7 +81,10 @@ class HomePageCubit extends Cubit<HomePageState> {
 
   void _decrypt() async {
     try {
-      final result = Aes256.decrypt(text, passphrase);
+      final result = Aes256.decrypt(
+        encrypted: text,
+        passphrase: passphrase,
+      );
       emit(
         state.copyWith(
           result: result,

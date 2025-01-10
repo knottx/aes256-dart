@@ -29,7 +29,10 @@ class Aes256 {
   ///
   /// Returns:
   /// - A list of integers representing the salted key and IV.
-  static List<int> _generateSaltedKeyAndIv(String passphrase, List<int> salt) {
+  static List<int> _generateSaltedKeyAndIv({
+    required String passphrase,
+    required List<int> salt,
+  }) {
     final pass = utf8.encode(passphrase);
     var dx = <int>[];
     var salted = <int>[];
@@ -58,10 +61,16 @@ class Aes256 {
   ///
   /// Throws:
   /// - An error if encryption fails.
-  static String encrypt(String text, String passphrase) {
+  static String encrypt({
+    required String text,
+    required String passphrase,
+  }) {
     final random = Random.secure();
     final salt = List<int>.generate(8, (_) => random.nextInt(256));
-    final salted = _generateSaltedKeyAndIv(passphrase, salt);
+    final salted = _generateSaltedKeyAndIv(
+      passphrase: passphrase,
+      salt: salt,
+    );
 
     final key = Key(Uint8List.fromList(salted.sublist(0, 32)));
     final iv = IV(Uint8List.fromList(salted.sublist(32, 48)));
@@ -76,22 +85,25 @@ class Aes256 {
 
   /// Decrypts a base64 encoded string using AES-256 with the given passphrase.
   ///
-  /// This method decrypts the provided `encoded` string, which must be the result
+  /// This method decrypts the provided `encrypted` string, which must be the result
   /// of the `encrypt` method. It extracts the salt and encrypted data, derives
   /// the key and IV from the passphrase and salt, and then decrypts the data.
   ///
   /// Parameters:
-  /// - `encoded`: The base64 encoded string containing the encrypted data and salt.
+  /// - `encrypted`: The base64 encoded string containing the encrypted data and salt.
   /// - `passphrase`: The passphrase used to derive the key and IV.
   ///
   /// Returns:
   /// - The decrypted string if decryption is successful, or `null` if the decryption
-  ///   fails (e.g., if the encoded data does not start with 'Salted__').
+  ///   fails (e.g., if the encrypted data does not start with 'Salted__').
   ///
   /// Throws:
   /// - An error if decryption fails.
-  static String? decrypt(String encoded, String passphrase) {
-    final enc = base64.decode(encoded);
+  static String? decrypt({
+    required String encrypted,
+    required String passphrase,
+  }) {
+    final enc = base64.decode(encrypted);
     final saltedPrefix = utf8.decode(enc.sublist(0, 8));
 
     if (saltedPrefix != 'Salted__') {
@@ -102,7 +114,10 @@ class Aes256 {
 
     final salt = enc.sublist(8, 16);
     final text = enc.sublist(16);
-    final salted = _generateSaltedKeyAndIv(passphrase, salt);
+    final salted = _generateSaltedKeyAndIv(
+      passphrase: passphrase,
+      salt: salt,
+    );
 
     final key = Key(Uint8List.fromList(salted.sublist(0, 32)));
     final iv = IV(Uint8List.fromList(salted.sublist(32, 48)));

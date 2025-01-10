@@ -1,3 +1,7 @@
+# 1.0.8
+
+- Named parameters with required.
+
 # 1.0.7
 
 - Remove unnecessary async, update throw argument error.
