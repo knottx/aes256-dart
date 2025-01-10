@@ -11,9 +11,9 @@ import 'package:aes256/aes256.dart';
 
 ...
 // encryption
-final encrypted = await Aes256.encrypt("text", "passphrase");
+final encrypted = Aes256.encrypt('text', 'passphrase');
 
 // decryption
-final decrypted = await Aes256.decrypt(encrypted, "passphrase");
+final decrypted = Aes256.decrypt(encrypted, 'passphrase');
 ...
 ```
