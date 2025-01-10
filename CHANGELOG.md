@@ -1,3 +1,7 @@
+# 1.1.0
+
+- Update Readme.
+
 # 1.0.8
 
 - Named parameters with required.
